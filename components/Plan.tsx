@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Circle } from 'lucide-react';
 import { PlanWeek } from '../types';
 
@@ -30,6 +30,27 @@ const plans: PlanWeek[] = [
 ];
 
 const Plan: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const getThemeClasses = (theme: string) => {
     switch (theme) {
       case 'blue':
@@ -47,18 +68,29 @@ const Plan: React.FC = () => {
 
   return (
     <section id="plan" className="py-16 bg-white scroll-mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 relative">
-          4周实训阶段目标规划
-          <span className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-12 h-1 bg-blue-600 rounded"></span>
-        </h2>
+      <div 
+        ref={sectionRef}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
+        <div className={`transition-all duration-700 ease-out transform ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}>
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 relative">
+            4周实训阶段目标规划
+            <span className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-12 h-1 bg-blue-600 rounded"></span>
+          </h2>
+        </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {plans.map((plan, index) => {
             const theme = getThemeClasses(plan.colorTheme);
             return (
               <div 
-                key={index} 
-                className={`${theme.bg} rounded-lg p-6 border-l-4 ${theme.border} shadow-sm hover:shadow-md transition-shadow duration-300`}
+                key={index}
+                style={{ transitionDelay: `${index * 150}ms` }}
+                className={`${theme.bg} rounded-lg p-6 border-l-4 ${theme.border} shadow-sm hover:shadow-md transition-all duration-700 ease-out transform ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
               >
                 <div className="flex items-center mb-4">
                   <div className={`w-10 h-10 ${theme.circle} rounded-full flex items-center justify-center text-white font-bold shadow-sm`}>

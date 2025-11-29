@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Database, Cpu, UserX, ArrowRight } from 'lucide-react';
 import { RiskItem } from '../types';
 
@@ -24,16 +24,51 @@ const risks: RiskItem[] = [
 ];
 
 const Risk: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="risk" className="py-16 bg-gray-50 scroll-mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 relative">
-          风险与应对
-          <span className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-12 h-1 bg-blue-600 rounded"></span>
-        </h2>
+      <div 
+        ref={sectionRef}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
+        <div className={`transition-all duration-700 ease-out transform ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}>
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 relative">
+            风险与应对
+            <span className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-12 h-1 bg-blue-600 rounded"></span>
+          </h2>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {risks.map((risk, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-lg p-6 transform hover:-translate-y-1 transition-transform duration-300">
+            <div 
+              key={index}
+              style={{ transitionDelay: `${index * 200}ms` }}
+              className={`bg-white rounded-lg shadow-lg p-6 hover:-translate-y-1 transition-all duration-700 ease-out transform ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+            >
               <div className="flex items-center mb-6">
                 <div className="p-3 bg-gray-100 rounded-full mr-4">
                     <risk.icon className={`w-6 h-6 ${risk.iconColorClass}`} />

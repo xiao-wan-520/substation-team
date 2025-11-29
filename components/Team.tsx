@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Crown, Wrench, User } from 'lucide-react';
 import { TeamMember } from '../types';
 
@@ -42,19 +42,50 @@ const members: TeamMember[] = [
 ];
 
 const Team: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="team" className="py-16 bg-white scroll-mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 relative">
-          团队成员
-          <span className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-12 h-1 bg-blue-600 rounded"></span>
-        </h2>
+      <div 
+        ref={sectionRef}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
+        <div className={`transition-all duration-700 ease-out transform ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}>
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 relative">
+            团队成员
+            <span className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-12 h-1 bg-blue-600 rounded"></span>
+          </h2>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {members.map((member, index) => (
             <div 
               key={index}
-              className="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-all duration-300 border border-gray-100 hover:shadow-xl"
+              style={{ transitionDelay: `${index * 150}ms` }}
+              className={`bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-all duration-700 ease-out border border-gray-100 hover:shadow-xl ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
             >
               <div className={`w-24 h-24 ${member.bgClass} rounded-full mx-auto mb-6 flex items-center justify-center`}>
                 <member.icon className={`w-10 h-10 ${member.iconColorClass}`} />
