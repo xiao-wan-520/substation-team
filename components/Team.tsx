@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Crown, Wrench, User } from 'lucide-react';
+import { Crown, Wrench, User, Github, Mail } from 'lucide-react';
 import { TeamMember } from '../types';
 
 const members: TeamMember[] = [
@@ -64,7 +64,7 @@ const Team: React.FC = () => {
   }, []);
 
   return (
-    <section id="team" className="py-16 bg-white scroll-mt-16">
+    <section id="team" className="py-20 bg-white scroll-mt-16">
       <div 
         ref={sectionRef}
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
@@ -72,10 +72,12 @@ const Team: React.FC = () => {
         <div className={`transition-all duration-700 ease-out transform ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 relative">
-            团队成员
-            <span className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-12 h-1 bg-blue-600 rounded"></span>
-          </h2>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">团队成员</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto">
+              这是一个充满活力与技术的团队，每位成员都发挥着关键作用
+            </p>
+          </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -83,16 +85,31 @@ const Team: React.FC = () => {
             <div 
               key={index}
               style={{ transitionDelay: `${index * 150}ms` }}
-              className={`bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-all duration-700 ease-out border border-gray-100 hover:shadow-xl ${
+              className={`group relative bg-white rounded-2xl p-8 text-center transition-all duration-700 ease-out border border-gray-100 shadow-lg hover:shadow-xl hover:-translate-y-2 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
-              <div className={`w-24 h-24 ${member.bgClass} rounded-full mx-auto mb-6 flex items-center justify-center`}>
-                <member.icon className={`w-10 h-10 ${member.iconColorClass}`} />
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gray-200 to-transparent group-hover:via-blue-500 transition-all duration-500"></div>
+              
+              <div className={`w-28 h-28 ${member.bgClass} rounded-full mx-auto mb-6 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300`}>
+                <member.icon className={`w-12 h-12 ${member.iconColorClass}`} />
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-1">{member.name}</h3>
-              <p className={`${member.colorClass} font-semibold mb-3`}>{member.role}</p>
-              <p className="text-gray-600 text-sm">{member.description}</p>
+              
+              <h3 className="text-2xl font-bold text-gray-800 mb-1">{member.name}</h3>
+              <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 ${member.bgClass} ${member.colorClass}`}>
+                {member.role}
+              </div>
+              
+              <p className="text-gray-600 text-sm mb-6 leading-relaxed min-h-[40px]">{member.description}</p>
+              
+              <div className="flex justify-center space-x-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
+                <button className="text-gray-400 hover:text-gray-800 transition-colors p-2 rounded-full hover:bg-gray-100">
+                  <Github className="w-5 h-5" />
+                </button>
+                <button className="text-gray-400 hover:text-blue-600 transition-colors p-2 rounded-full hover:bg-blue-50">
+                  <Mail className="w-5 h-5" />
+                </button>
+              </div>
             </div>
           ))}
         </div>
