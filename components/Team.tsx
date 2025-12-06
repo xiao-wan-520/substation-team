@@ -64,7 +64,7 @@ const Team: React.FC = () => {
   }, []);
 
   return (
-    <section id="team" className="py-20 bg-white scroll-mt-16">
+    <section id="team" className="py-24 bg-white scroll-mt-16">
       <div 
         ref={sectionRef}
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
@@ -73,8 +73,8 @@ const Team: React.FC = () => {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">团队成员</h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight">团队成员</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto text-lg">
               这是一个充满活力与技术的团队，每位成员都发挥着关键作用
             </p>
           </div>
@@ -85,28 +85,28 @@ const Team: React.FC = () => {
             <div 
               key={index}
               style={{ transitionDelay: `${index * 150}ms` }}
-              className={`group relative bg-white rounded-2xl p-8 text-center transition-all duration-700 ease-out border border-gray-100 shadow-lg hover:shadow-xl hover:-translate-y-2 ${
+              className={`group relative bg-white rounded-2xl p-8 text-center transition-all duration-500 ease-out border border-gray-100 shadow-lg hover:shadow-2xl hover:-translate-y-2 overflow-hidden ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gray-200 to-transparent group-hover:via-blue-500 transition-all duration-500"></div>
+              <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 group-hover:via-blue-500 transition-all duration-500"></div>
               
-              <div className={`w-28 h-28 ${member.bgClass} rounded-full mx-auto mb-6 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300`}>
+              <div className={`w-28 h-28 ${member.bgClass} rounded-full mx-auto mb-6 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 ring-4 ring-white shadow-md`}>
                 <member.icon className={`w-12 h-12 ${member.iconColorClass}`} />
               </div>
               
-              <h3 className="text-2xl font-bold text-gray-800 mb-1">{member.name}</h3>
-              <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 ${member.bgClass} ${member.colorClass}`}>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">{member.name}</h3>
+              <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-5 ${member.bgClass} ${member.colorClass}`}>
                 {member.role}
               </div>
               
-              <p className="text-gray-600 text-sm mb-6 leading-relaxed min-h-[40px]">{member.description}</p>
+              <p className="text-gray-600 text-sm mb-8 leading-relaxed min-h-[40px] border-t border-gray-50 pt-4 group-hover:border-transparent transition-colors">{member.description}</p>
               
-              <div className="flex justify-center space-x-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
-                <button className="text-gray-400 hover:text-gray-800 transition-colors p-2 rounded-full hover:bg-gray-100">
+              <div className="flex justify-center space-x-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+                <button className="text-gray-400 hover:text-gray-900 hover:bg-gray-100 p-2 rounded-full transition-all">
                   <Github className="w-5 h-5" />
                 </button>
-                <button className="text-gray-400 hover:text-blue-600 transition-colors p-2 rounded-full hover:bg-blue-50">
+                <button className="text-gray-400 hover:text-blue-600 hover:bg-blue-50 p-2 rounded-full transition-all">
                   <Mail className="w-5 h-5" />
                 </button>
               </div>

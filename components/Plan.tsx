@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Circle, Flag, Rocket, Code2, Trophy } from 'lucide-react';
 import { PlanWeek } from '../types';
 
-// Reusing PlanWeek interface but conceptually treating it as PlanDay
 const plans: PlanWeek[] = [
   {
     week: '第一天：环境与数据',
@@ -55,20 +54,20 @@ const Plan: React.FC = () => {
   const getThemeClasses = (theme: string) => {
     switch (theme) {
       case 'blue':
-        return { bg: 'bg-blue-50', border: 'border-blue-500', circle: 'bg-blue-500', text: 'text-blue-600', icon: Flag };
+        return { bg: 'bg-blue-50', border: 'border-blue-500', circle: 'bg-blue-500', text: 'text-blue-600', icon: Flag, lightText: 'text-blue-100' };
       case 'green':
-        return { bg: 'bg-green-50', border: 'border-green-500', circle: 'bg-green-500', text: 'text-green-600', icon: Code2 };
+        return { bg: 'bg-green-50', border: 'border-green-500', circle: 'bg-green-500', text: 'text-green-600', icon: Code2, lightText: 'text-green-100' };
       case 'yellow':
-        return { bg: 'bg-yellow-50', border: 'border-yellow-500', circle: 'bg-yellow-500', text: 'text-yellow-600', icon: Rocket };
+        return { bg: 'bg-yellow-50', border: 'border-yellow-500', circle: 'bg-yellow-500', text: 'text-yellow-600', icon: Rocket, lightText: 'text-yellow-100' };
       case 'red':
-        return { bg: 'bg-red-50', border: 'border-red-500', circle: 'bg-red-500', text: 'text-red-600', icon: Trophy };
+        return { bg: 'bg-red-50', border: 'border-red-500', circle: 'bg-red-500', text: 'text-red-600', icon: Trophy, lightText: 'text-red-100' };
       default:
-        return { bg: 'bg-gray-50', border: 'border-gray-500', circle: 'bg-gray-500', text: 'text-gray-600', icon: Circle };
+        return { bg: 'bg-gray-50', border: 'border-gray-500', circle: 'bg-gray-500', text: 'text-gray-600', icon: Circle, lightText: 'text-gray-100' };
     }
   };
 
   return (
-    <section id="plan" className="py-20 bg-white scroll-mt-16 overflow-hidden">
+    <section id="plan" className="py-24 bg-white scroll-mt-16 overflow-hidden">
       <div 
         ref={sectionRef}
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
@@ -76,17 +75,17 @@ const Plan: React.FC = () => {
         <div className={`transition-all duration-700 ease-out transform ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-4 relative">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4 relative tracking-tight">
             4天实训冲刺规划
           </h2>
-          <p className="text-center text-gray-500 mb-16 max-w-2xl mx-auto">
+          <p className="text-center text-gray-500 mb-20 max-w-2xl mx-auto text-lg">
             时间紧迫，任务艰巨。我们将通过精细化的日程管理，确保每一天都有实质性的产出。
           </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-          {/* Connector Line (Desktop only) - z-0 to stay behind cards but needs relative parent */}
-          <div className="hidden lg:block absolute top-[2.5rem] left-[10%] right-[10%] h-1 bg-gray-100 z-0"></div>
+          {/* Connector Line (Desktop only) */}
+          <div className="hidden lg:block absolute top-[3rem] left-[12%] right-[12%] h-0.5 border-t-2 border-dashed border-gray-200 z-0"></div>
 
           {plans.map((plan, index) => {
             const theme = getThemeClasses(plan.colorTheme);
@@ -95,22 +94,28 @@ const Plan: React.FC = () => {
               <div 
                 key={index}
                 style={{ transitionDelay: `${index * 150}ms` }}
-                className={`relative z-10 ${theme.bg} rounded-xl p-6 border-t-4 ${theme.border} shadow-lg hover:shadow-xl transition-all duration-700 ease-out transform hover:-translate-y-2 flex flex-col h-full ${
+                className={`relative z-10 bg-white rounded-2xl p-6 border border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-500 ease-out transform hover:-translate-y-2 flex flex-col h-full group overflow-hidden ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
               >
-                <div className="flex flex-col items-center mb-6 text-center">
-                  <div className={`w-14 h-14 ${theme.circle} rounded-2xl rotate-3 flex items-center justify-center text-white shadow-md mb-4 ring-4 ring-white`}>
-                    <Icon className="w-7 h-7" />
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-800">{plan.week}</h3>
-                  <div className="h-1 w-10 bg-gray-200 mt-2 rounded-full"></div>
+                {/* Large Watermark Number */}
+                <div className={`absolute -right-4 -bottom-8 text-9xl font-black ${theme.lightText} opacity-20 pointer-events-none select-none transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-2`}>
+                  {plan.number}
                 </div>
-                <ul className="space-y-3 flex-grow">
+
+                <div className="flex flex-col items-center mb-6 text-center relative">
+                  <div className={`w-16 h-16 ${theme.circle} rounded-2xl rotate-3 flex items-center justify-center text-white shadow-lg shadow-gray-200 mb-5 ring-4 ring-white transition-transform duration-300 group-hover:rotate-12`}>
+                    <Icon className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900">{plan.week}</h3>
+                  <div className={`h-1 w-12 ${theme.bg.replace('bg-', 'bg-').replace('50', '500')} mt-3 rounded-full opacity-30`}></div>
+                </div>
+                
+                <ul className="space-y-4 flex-grow relative z-10">
                   {plan.tasks.map((task, taskIndex) => (
-                    <li key={taskIndex} className="flex items-start text-sm text-gray-700">
-                      <div className={`w-1.5 h-1.5 rounded-full ${theme.text} bg-current mt-1.5 mr-2 flex-shrink-0`} />
-                      <span className="leading-snug">{task}</span>
+                    <li key={taskIndex} className="flex items-start text-sm text-gray-600">
+                      <div className={`w-1.5 h-1.5 rounded-full ${theme.text} bg-current mt-1.5 mr-3 flex-shrink-0 ring-2 ring-white`} />
+                      <span className="leading-relaxed group-hover:text-gray-900 transition-colors">{task}</span>
                     </li>
                   ))}
                 </ul>

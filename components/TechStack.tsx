@@ -54,14 +54,14 @@ const technologies = [
 
 const TechStack: React.FC = () => {
   return (
-    <section id="tech-stack" className="py-20 bg-gray-50 border-b border-gray-100 scroll-mt-16">
+    <section id="tech-stack" className="py-24 bg-gray-50 border-b border-gray-100 scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <span className="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-600 text-xs font-bold tracking-wider uppercase mb-3">
+          <span className="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-600 text-xs font-bold tracking-wider uppercase mb-3 border border-blue-200">
             Technology Stack
           </span>
-          <h2 className="text-3xl font-bold text-gray-900">技术栈与工具链</h2>
-          <p className="mt-4 text-gray-500 max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">技术栈与工具链</h2>
+          <p className="mt-4 text-gray-500 max-w-2xl mx-auto text-lg">
             我们选择轻量级、高效率的技术组合，专注于快速迭代与实际应用
           </p>
         </div>
@@ -72,8 +72,8 @@ const TechStack: React.FC = () => {
               key={index} 
               className={`group flex flex-col h-full p-8 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${tech.border}`}
             >
-              <div className="flex items-center mb-4">
-                <div className={`w-12 h-12 ${tech.bg} rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+              <div className="flex items-center mb-5">
+                <div className={`w-12 h-12 ${tech.bg} rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-sm`}>
                   <tech.icon className={`w-6 h-6 ${tech.color}`} />
                 </div>
                 <h3 className="text-lg font-bold text-gray-800 group-hover:text-blue-600 transition-colors">{tech.name}</h3>
