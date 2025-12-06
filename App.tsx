@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import Features from './components/Features';
 import Team from './components/Team';
+import TechStack from './components/TechStack';
 import Rules from './components/Rules';
 import Plan from './components/Plan';
 import Risk from './components/Risk';
@@ -50,6 +52,8 @@ const App: React.FC = () => {
       <Navbar />
       <main className="flex-grow">
         <Hero />
+        <Features />
+        <TechStack />
         <Team />
         <Rules />
         <Plan />
